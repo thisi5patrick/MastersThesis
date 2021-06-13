@@ -27,11 +27,19 @@ class LettersProcessing:
 
         return lines
 
-    def split_words_in_lines(self, line: dict):
+    def split_words_in_lines(self, line: dict) -> list:
+        word_boxes = []
         line_pixels = self.threshed[line['start']: line['end'], :]
         final_thr = cv.dilate(line_pixels, None, iterations=1)
 
         contours, hierarchy = cv.findContours(final_thr, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+        boundingBoxes = [cv.boundingRect(c) for c in contours]
+        contours, boundingBoxes = zip(*sorted(zip(contours, boundingBoxes), key=lambda b: b[1][0], reverse=False))
 
-        for i in range(self.threshed.shape[1]):
-            ...
+        for contour in contours:
+            if cv.contourArea(contour) > 1000:
+                x, y, w, h = cv.boundingRect(contour)
+                letterBgr = line_pixels[0:line_pixels.shape[1], x:x + w]
+                word_boxes.append([{'x': x, 'y': y, 'w': w, 'h': h}])
+
+        return word_boxes

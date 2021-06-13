@@ -132,3 +132,5 @@ dmypy.json
 test
 masters
 img
+neural_networks/datasets/images
+neural_networks/datasets/labels
