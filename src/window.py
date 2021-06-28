@@ -15,6 +15,7 @@ class Window(Frame):
         self.open_file_button = Button(self)
         self.image_canvas = Canvas(self)
         self.words_button = Button(self)
+        self.init_recognize_button = Button(self)
         self.initUI()
 
     def selectFile(self):
@@ -27,7 +28,7 @@ class Window(Frame):
             filetypes=file_types
         )
         self.image_file = Image.open(file_name)
-        if self.image_file.size[0] > 614:
+        if self.image_file.size[0] != 614:
             self.image_file = self.image_file.resize(
                 (614, int(self.image_file.size[1] * 614 / self.image_file.size[0])))
 
@@ -46,12 +47,18 @@ class Window(Frame):
                 y_point_2 = word[0]['y'] + word[0]['h'] + line['start']
                 self.image_canvas.create_rectangle(x_point_1, y_point_1, x_point_2, y_point_2)
 
+    def recognizeWords(self):
+        ...
+
     def initUI(self):
         self.image_canvas.config(width=614, height=874)
         self.image_canvas.grid(row=0, column=0, sticky=NW, rowspan=100)
 
         self.open_file_button.config(command=self.selectFile, text='Import file', width=20)
-        self.open_file_button.grid(row=0, column=1, padx=120, pady=50, ipady=10)
+        self.open_file_button.grid(row=10, column=1, padx=120, ipady=10)
 
         self.words_button.config(text='Highlight words', width=20, command=self.highlightWords)
-        self.words_button.grid(row=1, column=1, padx=120, ipady=10)
+        self.words_button.grid(row=11, column=1, padx=120, ipady=10)
+
+        self.init_recognize_button.config(text='Recognize letters', width=20, command=self.recognizeWords)
+        self.init_recognize_button.grid(row=12, column=1, padx=120, ipady=10)
