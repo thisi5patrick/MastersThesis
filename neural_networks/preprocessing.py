@@ -34,11 +34,6 @@ except FileExistsError:
 for folder in os.listdir(IMAGES_PATH):
     for subfolder in os.listdir(f'{IMAGES_PATH}/{folder}'):
         for file in os.listdir(f'{IMAGES_PATH}/{folder}/{subfolder}'):
-            try:
-                labels[labels['file_name'] == file[:-4]]['status'].item()
-            except ValueError:
-                print(file)
-                print(labels[labels['file_name'] == file[:-4]]['status'].item())
             if labels[labels['file_name'] == file[:-4]]['status'].item() != 'ok':
                 continue
             result = np.full((FINAL_IMAGE_HEIGHT, FINAL_IMAGE_WIDTH), 255, dtype=np.uint8)
