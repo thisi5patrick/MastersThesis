@@ -1,13 +1,16 @@
+from os import path
+
 from tensorflow.keras import layers
 from tensorflow.keras import Model
 from tensorflow.keras import backend as K
 from tensorflow.keras import regularizers
+from .model_base import ModelBase
 
 K.set_image_data_format('channels_last')
 
 
-class ConvModel:
-    def __new__(cls, *args, **kwargs):
+class ConvModel(ModelBase):
+    def __init__(self):
         input_data = layers.Input(name='the_input', shape=(128, 64, 1), dtype='float32')
 
         iam_layers = layers.Conv2D(64, (3, 3), padding='same', name='conv1', kernel_initializer='he_normal',
@@ -49,4 +52,6 @@ class ConvModel:
 
         iam_outputs = layers.Dense(80, kernel_initializer='he_normal', name='dense2', activation='softmax')(iam_layers)
 
-        return Model(inputs=input_data, outputs=iam_outputs)
+        self.model = Model(inputs=input_data, outputs=iam_outputs)
+        self.model.load_weights(path.join(path.dirname(__file__), 'model_weights/conv_model.h5'))
+
