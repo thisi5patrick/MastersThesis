@@ -1,1 +1,1 @@
-from .letters_processing import LettersProcessing
+from .image_processing import ImageProcessing

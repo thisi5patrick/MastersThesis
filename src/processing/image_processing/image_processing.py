@@ -7,8 +7,8 @@ import numpy as np
 class ImageProcessing:
     def __init__(self, img: np.ndarray):
         self.img = img
-        gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-        th, self.threshed = cv.threshold(gray, 127, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)
+        self.gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+        th, self.threshed = cv.threshold(self.gray, 127, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)
 
     def get_lines(self) -> dict:
         lines = []
