@@ -13,7 +13,7 @@ class ModelBase(ABC):
 
     def predictWord(self, x):
 
-        encoded_prediction = self.model.predict(x=x, verbose=1)
+        encoded_prediction = self.model.predict(x=x)
         decoded_prediction = K.get_value(K.ctc_decode(encoded_prediction,
                                                       input_length=np.ones(encoded_prediction.shape[0]) *
                                                                    encoded_prediction.shape[1],

@@ -44,4 +44,4 @@ class WordsProcessing:
         self.img = self.img.astype(np.float32)
         self.img /= 255
 
-        return self.img
+        return self.img.T
